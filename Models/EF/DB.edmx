@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bd_CELEXAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBL_CAT_GRUPO">
+          <Key>
+            <PropertyRef Name="Grupo_Id" />
+          </Key>
+          <Property Name="Grupo_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Grupo_Nombre" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TBL_CAT_IDIOMA">
+          <Key>
+            <PropertyRef Name="Idioma_Id" />
+          </Key>
+          <Property Name="Idioma_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Idioma_Nombre" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TBL_CAT_NIVEL">
+          <Key>
+            <PropertyRef Name="Nivel_Id" />
+          </Key>
+          <Property Name="Nivel_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nivel_Grado" Type="nchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_ALUMNO">
+          <Key>
+            <PropertyRef Name="Alumno_Id" />
+          </Key>
+          <Property Name="Alumno_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alumno_Email" Type="nchar" MaxLength="30" />
+          <Property Name="Alumno_Pass" Type="nchar" MaxLength="6" />
+          <Property Name="Alumno_Nombre" Type="nchar" MaxLength="30" />
+          <Property Name="Alumno_AP" Type="nchar" MaxLength="30" />
+          <Property Name="Alumno_AM" Type="nchar" MaxLength="30" />
+          <Property Name="Alumno_FehcaIngreso" Type="datetime" />
+          <Property Name="Alumno_Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_PAGO">
+          <Key>
+            <PropertyRef Name="Pago_Id" />
+          </Key>
+          <Property Name="Pago_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pago_Referencia" Type="nvarchar" MaxLength="10" />
+          <Property Name="Pago_Monto" Type="int" />
+          <Property Name="Pago_Vaucher-ruta" Type="nchar" MaxLength="100" />
+          <Property Name="Alumno_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_PROFESOR">
+          <Key>
+            <PropertyRef Name="Profesor_Id" />
+          </Key>
+          <Property Name="Profesor_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Profesor_Email" Type="nchar" MaxLength="30" />
+          <Property Name="Profesor_Pass" Type="nchar" MaxLength="8" />
+          <Property Name="Profesor_Nombre" Type="nchar" MaxLength="15" />
+          <Property Name="Profesor_AP" Type="nchar" MaxLength="30" />
+          <Property Name="Profesor_AM" Type="nchar" MaxLength="30" />
+          <Property Name="Profesor_FechaIngreso" Type="datetime" />
+          <Property Name="Profesor_Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_RESULTADOS">
+          <Key>
+            <PropertyRef Name="Resultado_Id" />
+          </Key>
+          <Property Name="Resultado_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Resultado_ME" Type="int" />
+          <Property Name="Resultado_FE" Type="int" />
+          <Property Name="Resultado_AVG" Type="int" />
+          <Property Name="Alumno_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alumno_Id" Type="int" />
+          <Property Name="Profesor_Id" Type="int" />
+          <Property Name="Idioma_Id" Type="int" />
+          <Property Name="Grupo_Id" Type="int" />
+          <Property Name="Nivel_Id" Type="int" />
+        </EntityType>
+        <Association Name="FK_ALUMNO">
+          <End Role="TBL_OPE_ALUMNO" Type="Self.TBL_OPE_ALUMNO" Multiplicity="0..1" />
+          <End Role="TBL_OPE_PAGO" Type="Self.TBL_OPE_PAGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_ALUMNO">
+              <PropertyRef Name="Alumno_Id" />
+            </Principal>
+            <Dependent Role="TBL_OPE_PAGO">
+              <PropertyRef Name="Alumno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_ALUMNO">
+          <End Role="TBL_OPE_ALUMNO" Type="Self.TBL_OPE_ALUMNO" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" Type="Self.TBL_REL_ALUMNO-PROFESOR-IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_ALUMNO">
+              <PropertyRef Name="Alumno_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+              <PropertyRef Name="Alumno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_GRUPO">
+          <End Role="TBL_CAT_GRUPO" Type="Self.TBL_CAT_GRUPO" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" Type="Self.TBL_REL_ALUMNO-PROFESOR-IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CAT_GRUPO">
+              <PropertyRef Name="Grupo_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+              <PropertyRef Name="Grupo_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_IDIOMA">
+          <End Role="TBL_CAT_IDIOMA" Type="Self.TBL_CAT_IDIOMA" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" Type="Self.TBL_REL_ALUMNO-PROFESOR-IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CAT_IDIOMA">
+              <PropertyRef Name="Idioma_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+              <PropertyRef Name="Idioma_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_Nivel">
+          <End Role="TBL_CAT_NIVEL" Type="Self.TBL_CAT_NIVEL" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" Type="Self.TBL_REL_ALUMNO-PROFESOR-IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CAT_NIVEL">
+              <PropertyRef Name="Nivel_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+              <PropertyRef Name="Nivel_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_PROFESOR">
+          <End Role="TBL_OPE_PROFESOR" Type="Self.TBL_OPE_PROFESOR" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" Type="Self.TBL_REL_ALUMNO-PROFESOR-IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_PROFESOR">
+              <PropertyRef Name="Profesor_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+              <PropertyRef Name="Profesor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_OPE_RESULTADOS">
+          <End Role="TBL_OPE_ALUMNO" Type="Self.TBL_OPE_ALUMNO" Multiplicity="0..1" />
+          <End Role="TBL_OPE_RESULTADOS" Type="Self.TBL_OPE_RESULTADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_ALUMNO">
+              <PropertyRef Name="Alumno_Id" />
+            </Principal>
+            <Dependent Role="TBL_OPE_RESULTADOS">
+              <PropertyRef Name="Alumno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_CELEXAModelStoreContainer">
+          <EntitySet Name="TBL_CAT_GRUPO" EntityType="Self.TBL_CAT_GRUPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_CAT_IDIOMA" EntityType="Self.TBL_CAT_IDIOMA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_CAT_NIVEL" EntityType="Self.TBL_CAT_NIVEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_OPE_ALUMNO" EntityType="Self.TBL_OPE_ALUMNO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_OPE_PAGO" EntityType="Self.TBL_OPE_PAGO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_OPE_PROFESOR" EntityType="Self.TBL_OPE_PROFESOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_OPE_RESULTADOS" EntityType="Self.TBL_OPE_RESULTADOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_REL_ALUMNO-PROFESOR-IDIOMA" EntityType="Self.TBL_REL_ALUMNO-PROFESOR-IDIOMA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ALUMNO" Association="Self.FK_ALUMNO">
+            <End Role="TBL_OPE_ALUMNO" EntitySet="TBL_OPE_ALUMNO" />
+            <End Role="TBL_OPE_PAGO" EntitySet="TBL_OPE_PAGO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_ALUMNO" Association="Self.FK_REL_ALUMNO">
+            <End Role="TBL_OPE_ALUMNO" EntitySet="TBL_OPE_ALUMNO" />
+            <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" EntitySet="TBL_REL_ALUMNO-PROFESOR-IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_GRUPO" Association="Self.FK_REL_GRUPO">
+            <End Role="TBL_CAT_GRUPO" EntitySet="TBL_CAT_GRUPO" />
+            <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" EntitySet="TBL_REL_ALUMNO-PROFESOR-IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_IDIOMA" Association="Self.FK_REL_IDIOMA">
+            <End Role="TBL_CAT_IDIOMA" EntitySet="TBL_CAT_IDIOMA" />
+            <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" EntitySet="TBL_REL_ALUMNO-PROFESOR-IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_Nivel" Association="Self.FK_REL_Nivel">
+            <End Role="TBL_CAT_NIVEL" EntitySet="TBL_CAT_NIVEL" />
+            <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" EntitySet="TBL_REL_ALUMNO-PROFESOR-IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_PROFESOR" Association="Self.FK_REL_PROFESOR">
+            <End Role="TBL_OPE_PROFESOR" EntitySet="TBL_OPE_PROFESOR" />
+            <End Role="TBL_REL_ALUMNO-PROFESOR-IDIOMA" EntitySet="TBL_REL_ALUMNO-PROFESOR-IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_OPE_RESULTADOS" Association="Self.FK_TBL_OPE_RESULTADOS">
+            <End Role="TBL_OPE_ALUMNO" EntitySet="TBL_OPE_ALUMNO" />
+            <End Role="TBL_OPE_RESULTADOS" EntitySet="TBL_OPE_RESULTADOS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bd_CELEXAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBL_CAT_GRUPO">
+          <Key>
+            <PropertyRef Name="Grupo_Id" />
+          </Key>
+          <Property Name="Grupo_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Grupo_Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Relationship="Self.FK_REL_GRUPO" FromRole="TBL_CAT_GRUPO" ToRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+        </EntityType>
+        <EntityType Name="TBL_CAT_IDIOMA">
+          <Key>
+            <PropertyRef Name="Idioma_Id" />
+          </Key>
+          <Property Name="Idioma_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Idioma_Nombre" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Relationship="Self.FK_REL_IDIOMA" FromRole="TBL_CAT_IDIOMA" ToRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+        </EntityType>
+        <EntityType Name="TBL_CAT_NIVEL">
+          <Key>
+            <PropertyRef Name="Nivel_Id" />
+          </Key>
+          <Property Name="Nivel_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nivel_Grado" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Relationship="Self.FK_REL_Nivel" FromRole="TBL_CAT_NIVEL" ToRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_ALUMNO">
+          <Key>
+            <PropertyRef Name="Alumno_Id" />
+          </Key>
+          <Property Name="Alumno_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alumno_Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Alumno_Pass" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="Alumno_Nombre" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Alumno_AP" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Alumno_AM" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Alumno_FehcaIngreso" Type="DateTime" Precision="3" />
+          <Property Name="Alumno_Activo" Type="Boolean" />
+          <NavigationProperty Name="TBL_OPE_PAGO" Relationship="Self.FK_ALUMNO" FromRole="TBL_OPE_ALUMNO" ToRole="TBL_OPE_PAGO" />
+          <NavigationProperty Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Relationship="Self.FK_REL_ALUMNO" FromRole="TBL_OPE_ALUMNO" ToRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          <NavigationProperty Name="TBL_OPE_RESULTADOS" Relationship="Self.FK_TBL_OPE_RESULTADOS" FromRole="TBL_OPE_ALUMNO" ToRole="TBL_OPE_RESULTADOS" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_PAGO">
+          <Key>
+            <PropertyRef Name="Pago_Id" />
+          </Key>
+          <Property Name="Pago_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pago_Referencia" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Pago_Monto" Type="Int32" />
+          <Property Name="Pago_Vaucher_ruta" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Alumno_Id" Type="Int32" />
+          <NavigationProperty Name="TBL_OPE_ALUMNO" Relationship="Self.FK_ALUMNO" FromRole="TBL_OPE_PAGO" ToRole="TBL_OPE_ALUMNO" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_PROFESOR">
+          <Key>
+            <PropertyRef Name="Profesor_Id" />
+          </Key>
+          <Property Name="Profesor_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Profesor_Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Profesor_Pass" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="Profesor_Nombre" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Profesor_AP" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Profesor_AM" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Profesor_FechaIngreso" Type="DateTime" Precision="3" />
+          <Property Name="Profesor_Activo" Type="Boolean" />
+          <NavigationProperty Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Relationship="Self.FK_REL_PROFESOR" FromRole="TBL_OPE_PROFESOR" ToRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+        </EntityType>
+        <EntityType Name="TBL_OPE_RESULTADOS">
+          <Key>
+            <PropertyRef Name="Resultado_Id" />
+          </Key>
+          <Property Name="Resultado_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Resultado_ME" Type="Int32" />
+          <Property Name="Resultado_FE" Type="Int32" />
+          <Property Name="Resultado_AVG" Type="Int32" />
+          <Property Name="Alumno_Id" Type="Int32" />
+          <NavigationProperty Name="TBL_OPE_ALUMNO" Relationship="Self.FK_TBL_OPE_RESULTADOS" FromRole="TBL_OPE_RESULTADOS" ToRole="TBL_OPE_ALUMNO" />
+        </EntityType>
+        <EntityType Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alumno_Id" Type="Int32" />
+          <Property Name="Profesor_Id" Type="Int32" />
+          <Property Name="Idioma_Id" Type="Int32" />
+          <Property Name="Grupo_Id" Type="Int32" />
+          <Property Name="Nivel_Id" Type="Int32" />
+          <NavigationProperty Name="TBL_CAT_GRUPO" Relationship="Self.FK_REL_GRUPO" FromRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" ToRole="TBL_CAT_GRUPO" />
+          <NavigationProperty Name="TBL_CAT_IDIOMA" Relationship="Self.FK_REL_IDIOMA" FromRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" ToRole="TBL_CAT_IDIOMA" />
+          <NavigationProperty Name="TBL_CAT_NIVEL" Relationship="Self.FK_REL_Nivel" FromRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" ToRole="TBL_CAT_NIVEL" />
+          <NavigationProperty Name="TBL_OPE_ALUMNO" Relationship="Self.FK_REL_ALUMNO" FromRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" ToRole="TBL_OPE_ALUMNO" />
+          <NavigationProperty Name="TBL_OPE_PROFESOR" Relationship="Self.FK_REL_PROFESOR" FromRole="TBL_REL_ALUMNO_PROFESOR_IDIOMA" ToRole="TBL_OPE_PROFESOR" />
+        </EntityType>
+        <Association Name="FK_REL_GRUPO">
+          <End Role="TBL_CAT_GRUPO" Type="Self.TBL_CAT_GRUPO" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Type="Self.TBL_REL_ALUMNO_PROFESOR_IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CAT_GRUPO">
+              <PropertyRef Name="Grupo_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+              <PropertyRef Name="Grupo_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_IDIOMA">
+          <End Role="TBL_CAT_IDIOMA" Type="Self.TBL_CAT_IDIOMA" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Type="Self.TBL_REL_ALUMNO_PROFESOR_IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CAT_IDIOMA">
+              <PropertyRef Name="Idioma_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+              <PropertyRef Name="Idioma_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_Nivel">
+          <End Role="TBL_CAT_NIVEL" Type="Self.TBL_CAT_NIVEL" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Type="Self.TBL_REL_ALUMNO_PROFESOR_IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CAT_NIVEL">
+              <PropertyRef Name="Nivel_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+              <PropertyRef Name="Nivel_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ALUMNO">
+          <End Role="TBL_OPE_ALUMNO" Type="Self.TBL_OPE_ALUMNO" Multiplicity="0..1" />
+          <End Role="TBL_OPE_PAGO" Type="Self.TBL_OPE_PAGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_ALUMNO">
+              <PropertyRef Name="Alumno_Id" />
+            </Principal>
+            <Dependent Role="TBL_OPE_PAGO">
+              <PropertyRef Name="Alumno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_ALUMNO">
+          <End Role="TBL_OPE_ALUMNO" Type="Self.TBL_OPE_ALUMNO" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Type="Self.TBL_REL_ALUMNO_PROFESOR_IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_ALUMNO">
+              <PropertyRef Name="Alumno_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+              <PropertyRef Name="Alumno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_OPE_RESULTADOS">
+          <End Role="TBL_OPE_ALUMNO" Type="Self.TBL_OPE_ALUMNO" Multiplicity="0..1" />
+          <End Role="TBL_OPE_RESULTADOS" Type="Self.TBL_OPE_RESULTADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_ALUMNO">
+              <PropertyRef Name="Alumno_Id" />
+            </Principal>
+            <Dependent Role="TBL_OPE_RESULTADOS">
+              <PropertyRef Name="Alumno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REL_PROFESOR">
+          <End Role="TBL_OPE_PROFESOR" Type="Self.TBL_OPE_PROFESOR" Multiplicity="0..1" />
+          <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" Type="Self.TBL_REL_ALUMNO_PROFESOR_IDIOMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OPE_PROFESOR">
+              <PropertyRef Name="Profesor_Id" />
+            </Principal>
+            <Dependent Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+              <PropertyRef Name="Profesor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_CELEXAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_CAT_GRUPO" EntityType="Self.TBL_CAT_GRUPO" />
+          <EntitySet Name="TBL_CAT_IDIOMA" EntityType="Self.TBL_CAT_IDIOMA" />
+          <EntitySet Name="TBL_CAT_NIVEL" EntityType="Self.TBL_CAT_NIVEL" />
+          <EntitySet Name="TBL_OPE_ALUMNO" EntityType="Self.TBL_OPE_ALUMNO" />
+          <EntitySet Name="TBL_OPE_PAGO" EntityType="Self.TBL_OPE_PAGO" />
+          <EntitySet Name="TBL_OPE_PROFESOR" EntityType="Self.TBL_OPE_PROFESOR" />
+          <EntitySet Name="TBL_OPE_RESULTADOS" EntityType="Self.TBL_OPE_RESULTADOS" />
+          <EntitySet Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA" EntityType="Self.TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          <AssociationSet Name="FK_REL_GRUPO" Association="Self.FK_REL_GRUPO">
+            <End Role="TBL_CAT_GRUPO" EntitySet="TBL_CAT_GRUPO" />
+            <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" EntitySet="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_IDIOMA" Association="Self.FK_REL_IDIOMA">
+            <End Role="TBL_CAT_IDIOMA" EntitySet="TBL_CAT_IDIOMA" />
+            <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" EntitySet="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_Nivel" Association="Self.FK_REL_Nivel">
+            <End Role="TBL_CAT_NIVEL" EntitySet="TBL_CAT_NIVEL" />
+            <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" EntitySet="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ALUMNO" Association="Self.FK_ALUMNO">
+            <End Role="TBL_OPE_ALUMNO" EntitySet="TBL_OPE_ALUMNO" />
+            <End Role="TBL_OPE_PAGO" EntitySet="TBL_OPE_PAGO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_ALUMNO" Association="Self.FK_REL_ALUMNO">
+            <End Role="TBL_OPE_ALUMNO" EntitySet="TBL_OPE_ALUMNO" />
+            <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" EntitySet="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_OPE_RESULTADOS" Association="Self.FK_TBL_OPE_RESULTADOS">
+            <End Role="TBL_OPE_ALUMNO" EntitySet="TBL_OPE_ALUMNO" />
+            <End Role="TBL_OPE_RESULTADOS" EntitySet="TBL_OPE_RESULTADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REL_PROFESOR" Association="Self.FK_REL_PROFESOR">
+            <End Role="TBL_OPE_PROFESOR" EntitySet="TBL_OPE_PROFESOR" />
+            <End Role="TBL_REL_ALUMNO_PROFESOR_IDIOMA" EntitySet="TBL_REL_ALUMNO_PROFESOR_IDIOMA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bd_CELEXAModelStoreContainer" CdmEntityContainer="bd_CELEXAEntities">
+          <EntitySetMapping Name="TBL_CAT_GRUPO">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_CAT_GRUPO">
+              <MappingFragment StoreEntitySet="TBL_CAT_GRUPO">
+                <ScalarProperty Name="Grupo_Id" ColumnName="Grupo_Id" />
+                <ScalarProperty Name="Grupo_Nombre" ColumnName="Grupo_Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_CAT_IDIOMA">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_CAT_IDIOMA">
+              <MappingFragment StoreEntitySet="TBL_CAT_IDIOMA">
+                <ScalarProperty Name="Idioma_Id" ColumnName="Idioma_Id" />
+                <ScalarProperty Name="Idioma_Nombre" ColumnName="Idioma_Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_CAT_NIVEL">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_CAT_NIVEL">
+              <MappingFragment StoreEntitySet="TBL_CAT_NIVEL">
+                <ScalarProperty Name="Nivel_Id" ColumnName="Nivel_Id" />
+                <ScalarProperty Name="Nivel_Grado" ColumnName="Nivel_Grado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_OPE_ALUMNO">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_OPE_ALUMNO">
+              <MappingFragment StoreEntitySet="TBL_OPE_ALUMNO">
+                <ScalarProperty Name="Alumno_Id" ColumnName="Alumno_Id" />
+                <ScalarProperty Name="Alumno_Email" ColumnName="Alumno_Email" />
+                <ScalarProperty Name="Alumno_Pass" ColumnName="Alumno_Pass" />
+                <ScalarProperty Name="Alumno_Nombre" ColumnName="Alumno_Nombre" />
+                <ScalarProperty Name="Alumno_AP" ColumnName="Alumno_AP" />
+                <ScalarProperty Name="Alumno_AM" ColumnName="Alumno_AM" />
+                <ScalarProperty Name="Alumno_FehcaIngreso" ColumnName="Alumno_FehcaIngreso" />
+                <ScalarProperty Name="Alumno_Activo" ColumnName="Alumno_Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_OPE_PAGO">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_OPE_PAGO">
+              <MappingFragment StoreEntitySet="TBL_OPE_PAGO">
+                <ScalarProperty Name="Pago_Id" ColumnName="Pago_Id" />
+                <ScalarProperty Name="Pago_Referencia" ColumnName="Pago_Referencia" />
+                <ScalarProperty Name="Pago_Monto" ColumnName="Pago_Monto" />
+                <ScalarProperty Name="Pago_Vaucher_ruta" ColumnName="Pago_Vaucher-ruta" />
+                <ScalarProperty Name="Alumno_Id" ColumnName="Alumno_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_OPE_PROFESOR">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_OPE_PROFESOR">
+              <MappingFragment StoreEntitySet="TBL_OPE_PROFESOR">
+                <ScalarProperty Name="Profesor_Id" ColumnName="Profesor_Id" />
+                <ScalarProperty Name="Profesor_Email" ColumnName="Profesor_Email" />
+                <ScalarProperty Name="Profesor_Pass" ColumnName="Profesor_Pass" />
+                <ScalarProperty Name="Profesor_Nombre" ColumnName="Profesor_Nombre" />
+                <ScalarProperty Name="Profesor_AP" ColumnName="Profesor_AP" />
+                <ScalarProperty Name="Profesor_AM" ColumnName="Profesor_AM" />
+                <ScalarProperty Name="Profesor_FechaIngreso" ColumnName="Profesor_FechaIngreso" />
+                <ScalarProperty Name="Profesor_Activo" ColumnName="Profesor_Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_OPE_RESULTADOS">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_OPE_RESULTADOS">
+              <MappingFragment StoreEntitySet="TBL_OPE_RESULTADOS">
+                <ScalarProperty Name="Resultado_Id" ColumnName="Resultado_Id" />
+                <ScalarProperty Name="Resultado_ME" ColumnName="Resultado_ME" />
+                <ScalarProperty Name="Resultado_FE" ColumnName="Resultado_FE" />
+                <ScalarProperty Name="Resultado_AVG" ColumnName="Resultado_AVG" />
+                <ScalarProperty Name="Alumno_Id" ColumnName="Alumno_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+            <EntityTypeMapping TypeName="bd_CELEXAModel.TBL_REL_ALUMNO_PROFESOR_IDIOMA">
+              <MappingFragment StoreEntitySet="TBL_REL_ALUMNO-PROFESOR-IDIOMA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Alumno_Id" ColumnName="Alumno_Id" />
+                <ScalarProperty Name="Profesor_Id" ColumnName="Profesor_Id" />
+                <ScalarProperty Name="Idioma_Id" ColumnName="Idioma_Id" />
+                <ScalarProperty Name="Grupo_Id" ColumnName="Grupo_Id" />
+                <ScalarProperty Name="Nivel_Id" ColumnName="Nivel_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,38 @@
+﻿@model List<TestCelexA.Models.LisViewModels.ListNombres_Alumnos>
+@{
+    ViewBag.Title = "ProfesorCalificaciones";
+}
+
+<h2>SUBIR CALIFICACIONES</h2>
+
+<div class="jumbotron">
+    <div class="text-center">
+        <a class="form-control" readonly>GRUPO: @ViewBag.Grupo</a>
+        <a class="form-control" readonly>NIVEL: @ViewBag.Nivel</a>
+        <a class="form-control" readonly>EXAMEN: FE</a>
+    </div>
+
+
+    <table class="table">
+
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">NOMBRE ALUMNO</th>
+                <th scope="col">PUNTOS</th>
+
+            </tr>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <th>@obj.Full_Name</th>
+                    <th> <input class="form-control" type="text"></th>
+                </tr>
+            }
+        </thead>
+
+    </table>
+    <div>
+        @Html.ActionLink("Guardar", "ProfesorInicio", "Home", new { @class = "btn btn-primary btn-lg btn-block " })
+    </div>
+</div>

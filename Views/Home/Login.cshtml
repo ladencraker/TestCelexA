@@ -1,0 +1,45 @@
+﻿@model TestCelexA.Models.LisViewModels.ViewModelAlumno
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<h2></h2>
+
+<div class="jumbotron">
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+
+        <div class="col-md">
+            @Html.LabelFor(Model => Model.Alumno_Email, "Email", new { @class="form-label"})
+            @Html.TextBoxFor(Model => Model.Alumno_Email, new { @class = "form-control", placeholder = "name@example.com" })
+
+        </div>
+
+        <div class="col-md">
+            @Html.LabelFor(Model => Model.Alumno_Pass, "Pass", new { @class = "form-label" })
+            @Html.PasswordFor(Model => Model.Alumno_Pass, new { @class = "form-control" })
+            @Html.ValidationMessageFor(Model => Model.Alumno_Pass)
+        </div>
+        <p></p>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+
+    }
+</div>
+<!--
+    <div class="col-md">
+        <label for="inputEmail4" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail4" placeholder="name@example.com">
+    </div>
+    <p></p>
+    <div class="col-md">
+        <label for="inputPassword4" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword4">
+    </div>
+    <p></p>
+
+</div>
+        -->

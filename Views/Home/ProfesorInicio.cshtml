@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "ProfesorInicio";
+}
+
+<h2> BIENVENIDO,  @Session["UserName"]</h2>
+<div class="jumbotron">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">GRUPO</th>
+                <th scope="col">#Alumnos</th>
+                <th scope="col">SUBIR CALIF</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td>@ViewBag.Grupo</td>
+                <td>@ViewBag.Cantidad</td>
+                <td>
+                    @Html.ActionLink("Editar ME", "ProfesorCalificaciones", "Home", new { @class = "btn btn-primary " })
+                    @Html.ActionLink("Editar FE", "ProfesorCalificaciones", "Home", new { @class = "btn btn-primary " })
+                            </td>
+            </tr>
+          
+        </tbody>
+    </table>
+    <a></a>
+    <div>
+        @Html.ActionLink("Salir", "Logout", "Home", new { @class = "btn btn-primary btn-lg btn-block " })
+
+
+    </div>
+</div>
+

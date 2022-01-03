@@ -1,0 +1,30 @@
+﻿@model TestCelexA.Models.LisViewModels.ViewModelPago
+@{
+    ViewBag.Title = "AlumnoPago";
+}
+
+
+
+<div class="jumbotron">
+    @using (Html.BeginForm("AlumnoPago", "Home", FormMethod.Post))
+    {
+    <h2>@Session["UserPago"]</h2>
+      
+            <div class="col-md">
+                @Html.LabelFor(Model => Model.Pago_referencia, "Referencia", new { @class = "form-label" })
+                @Html.TextBoxFor(Model => Model.Pago_referencia, new { @class = "form-control"})
+
+            </div>
+
+            <div class="col-md">
+                @Html.LabelFor(Model => Model.Pago_monto, "Monto", new { @class = "form-label" })
+                @Html.TextBoxFor(Model => Model.Pago_monto, new { @class = "form-control" })
+
+            </div>
+            <a></a>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        
+    }
+</div>

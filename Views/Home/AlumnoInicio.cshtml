@@ -1,0 +1,44 @@
+﻿@model TestCelexA.Controllers.HomeController
+@{
+    ViewBag.Title = "AlumnoInicio";
+    
+
+}
+
+<h2 class="align-content-center">BIENVENIDO , @Session["UserName"].ToString()</h2>
+<div class="jumbotron">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">IDIOMA</th>
+                <th scope="col">NIVEL</th>
+                <th scope="col">GRUPO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td>@ViewBag.Idioma</td>
+                <td>@ViewBag.Nivel</td>
+                <td>@ViewBag.Grupo</td>
+            </tr>
+
+
+        </tbody>
+    </table>
+    <div>
+        @Html.ActionLink("Pago", "AlumnoPago", "Home", new { @class = "btn btn-primary btn-lg btn-block " })
+    </div>
+    <p></p>
+    <div>
+        @Html.ActionLink("Resultados", "AlumnoResultados", "Home", new { @class = "btn btn-primary btn-lg btn-block " })
+
+    </div>
+    <p></p>
+    <div>
+        @Html.ActionLink("Salir", "Logout", "Home", new { @class = "btn btn-primary btn-lg btn-block " })
+ 
+
+    </div>
+</div>

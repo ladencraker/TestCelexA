@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "AlumnoResultados";
+    
+}
+
+<h2>AlumnoResultados</h2>
+
+<div class="jumbotron">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">EXAMEN</th>
+                <th scope="col">PUNTOS</th>
+                <th scope="col">ESTATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td>ME</td>
+                <td>@ViewBag.ME</td>
+                <td>
+                    @if (ViewBag.ME >= 80)
+                    {
+                        <a>Good</a>
+                    }
+                    else
+                    {
+                        <a>More</a>
+                    }
+                </td>
+            </tr>
+            <tr>
+
+                <td>FE</td>
+                <td>@ViewBag.FE</td>
+                <td>
+                    @if (ViewBag.FE >= 80)
+                    {
+                        <a>Good</a>
+                    }
+                    else
+                    {
+                        <a>More</a>
+                    }
+                </td>
+            </tr>
+            <tr>
+
+                <td>AVG</td>
+                <td>@ViewBag.AVG</td>
+                <td>
+                    @if (ViewBag.AVG >= 80)
+                    {
+                        <a>PASS</a>
+                    }
+                    else
+                    {
+                        <a>REPIT</a>
+                    }
+                            </td>
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <div>
+        @Html.ActionLink("REGRESAR", "AlumnoInicio", "Home", new { @class = "btn btn-primary btn-lg btn-block " })
+    </div>
+</div>
